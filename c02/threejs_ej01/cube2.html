@@ -28,16 +28,17 @@
             //Se crea el tamaño del render: setSize(ancho,alto,booleano(cambio de estilo))
 			renderer.setSize( window.innerWidth, window.innerHeight );
             
-			//
+			//renderer.domElement: lienzo donde el renderizador dibuja su salida
 			document.body.appendChild( renderer.domElement );
             
-			//crea el cubo
+			//BoxGeometry:crea el cubo con sus dimensionjes (Ancho, Altura, Profundidad)
             const geometry = new THREE.BoxGeometry( 1, 1, 1 );
             
-			//
+			//MeshBasicMaterial: Parametro opcional (color:0xffffff(blanca))
 			const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
             
-			//
+			//Mesh: geometría: (opcional) instancia de BufferGeometry. El valor predeterminado es un nuevo BufferGeometry.
+            //material: (opcional) material único o una serie de materiales. El valor predeterminado es un nuevo MeshBasicMaterial.
 			const cube = new THREE.Mesh( geometry, material );
             
 			//
