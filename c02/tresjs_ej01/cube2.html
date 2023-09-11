@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>MDN Games: Three.js demo</title>
+	<style>
+		body { margin: 0; padding: 0; font-size: 0; }
+		canvas { width: 100%; height: 100%; }
+	</style>
+    </head>
+    <body>
+		<!-- Incorporar la libreria de three.min.js-->
+        <script src="three.min.js"></script>
+        <script>
+            //Se crea una nueva escena: clase three metodo scene
+			//(espacio en el que se presenta el programa) metodo constructo sin parametros
+            const scene = new THREE.Scene(); 
+            
+            //Se crea un nueva camara: clase three cmara de perspectiva (con profundidad)
+			//THREE.PerspectiveCamera(campo de visionh en grados,relacion de aspectro en cuanto 
+			// a la camara,cercania de la camara, lejania de la camara)
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            
+            //Se crea un nuevo render: clase three metodo WebGLRenderer
+			//Parametros opcionales de objetos
+            const renderer = new THREE.WebGLRenderer();
+            
+            //Se crea el tamaño del render: setSize(ancho,alto,booleano(cambio de estilo))
+			renderer.setSize( window.innerWidth, window.innerHeight );
+            
+			//renderer.domElement: lienzo donde el renderizador dibuja su salida
+			document.body.appendChild( renderer.domElement );
+            
+			//BoxGeometry:crea el cubo con sus dimensionjes (Ancho, Altura, Profundidad)
+            const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+            
+			//MeshBasicMaterial: Parametro opcional (color:0xffffff(blanca))
+			const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+            
+			//Mesh: geometría: (opcional). El valor predeterminado es un nuevo BufferGeometry.
+            //material: (opcional) material único o una serie de materiales.  predeterminado: MeshBasicMaterial.
+			const cube = new THREE.Mesh( geometry, material );
+            
+			//En la escena se añade la funcion del cubo
+			scene.add( cube );
+
+            //Posición de la cámara en el eje z
+			camera.position.z = 5;
+
+            //Funcion para animar el cubo y hacer que este rote
+			function animate() 
+            {
+                // requestAnimationFrame: Método que genera animaciones fluidas
+                requestAnimationFrame(animate);
+
+                //Rotar el cubo en el eje x y y
+	            cube.rotation.x += 0.01;
+	            cube.rotation.y += 0.01;
+
+                //.render: Renderiza una escena u otro tipo de objeto usando una cámara 
+                //(scene: Object3D, camera: Cámara)
+                renderer.render(scene, camera);
+            }
+
+            //Activar la funcion animate
+            animate();
+        </script>
+    </body>
+</html>
