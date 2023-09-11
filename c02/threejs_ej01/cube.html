@@ -28,35 +28,41 @@
             //Se crea el tamaño del render: setSize(ancho,alto,booleano(cambio de estilo))
 			renderer.setSize( window.innerWidth, window.innerHeight );
             
-			//
+			//renderer.domElement: lienzo donde el renderizador dibuja su salida
 			document.body.appendChild( renderer.domElement );
             
-			//crea el cubo
+			//BoxGeometry:crea el cubo con sus dimensionjes (Ancho, Altura, Profundidad)
             const geometry = new THREE.BoxGeometry( 1, 1, 1 );
             
-			//
+			//MeshBasicMaterial: Parametro opcional (color:0xffffff(blanca))
 			const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
             
-			//
+			//Mesh: geometría: (opcional). El valor predeterminado es un nuevo BufferGeometry.
+            //material: (opcional) material único o una serie de materiales.  predeterminado: MeshBasicMaterial.
 			const cube = new THREE.Mesh( geometry, material );
             
-			//
+			//En la escena se añade la funcion del cubo
 			scene.add( cube );
 
-            //
+            //Posición de la cámara en el eje z
 			camera.position.z = 5;
 
-            //
+            //Funcion para animar el cubo y hacer que este rote
 			function animate() 
             {
-	            requestAnimationFrame( animate );
+	            // requestAnimationFrame: Método que genera animaciones fluidas
+                requestAnimationFrame( animate );
 
+	            //Rotar el cubo en el eje x y y
 	            cube.rotation.x += 0.01;
 	            cube.rotation.y += 0.01;
 
-	            renderer.render( scene, camera );
+	            //.render: Renderiza una escena u otro tipo de objeto usando una cámara 
+                //(scene: Object3D, camera: Cámara)
+                renderer.render( scene, camera );
             }
 
+             //Activar la funcion animate
             animate();
         </script>
     </body>
