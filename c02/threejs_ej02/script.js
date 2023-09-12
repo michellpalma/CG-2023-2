@@ -9,7 +9,7 @@ const scene = new THREE.Scene();
 const camera1 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
 //Ortogonal:(izquierda, derecha, arriba, abajo, cerca, lejos)
-const camera2 = new THREE.OrthographicCamera( window.innerWidth/-2, window.innerWidth/2, window.innerHeight/2, window.innerHeight/-2, 0,1, 1000 );
+const camera2 = new THREE.OrthographicCamera(-2, 2, 2, -2, 0.1, 1000);
 
 //Se crea un nuevo render
 const renderer = new THREE.WebGLRenderer();
@@ -44,5 +44,35 @@ cube.rotation.x += 1;
 camera1.position.z = 5;
 camera2.position.z = 5;
 
-renderer.render(scene, camera2);
+function init() 
+{
+    currentCamera = camera1;
+    window.addEventListener('keydown', toggleCamera);
+}
+function toggleCamera(event) 
+{
+    if (event.key === 'c' || event.key === 'C') {
+        // Alternar entre cámaras
+        if (currentCamera === camara1) 
+        {
+            currentCamera = camara2;
+        } 
+        else 
+        {
+            currentCamera = camara1;
+        }
+    }
+}
+window.addEventListener('resize', () => {
+    const newWidth = window.innerWidth;
+    const newHeight = window.innerHeight;
+
+    currentCamera.aspect = newWidth / newHeight;
+    currentCamera.updateProjectionMatrix();
+
+    renderer.setSize(newWidth, newHeight);
+});
+init();
+
+renderer.render(scene, currentCamera);
             
