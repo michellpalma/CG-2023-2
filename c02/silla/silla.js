@@ -13,20 +13,22 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 //renderer.domElement: lienzo donde el renderizador dibuja su salida
 document.body.appendChild( renderer.domElement );
             
-const x=2
-const y=2			
-const z=2
+//Constantes de las dimensiones de la caja
+const x=2; const y=2; const z=2
 
+//Secrea el material con el que se va a trabajar
 const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 
 
+//Se crea el respaldo con su geometria y se añade a la escena
 const respaldoG = new THREE.CylinderGeometry(0.4, 0.4, 0.2, 32);
-
 const respaldo = new THREE.Mesh(respaldoG, material);
 scene.add(respaldo);
-respaldo.rotation.set(5,0,0);
+// Se posiciona con las transformaciones rotation y position
+respaldo.rotation.set(4.9,0,0);
 respaldo.position.set(0,0.5,0);
 
+//Funcion para crear y escalar los cubos
 function crearC (a, b, c)
 {
     //BoxGeometry:crea el cubo con sus dimensionjes (Ancho, Altura, Profundidad)
@@ -36,28 +38,39 @@ function crearC (a, b, c)
     const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 
     //Mesh: geometría: (opcional), material: (opcional)
-    const nombre = new THREE.Mesh( geometryC, material );
+    const cubo = new THREE.Mesh( geometryC, material );
     
-   nombre.scale.set(a,b,c)
+    //Se modifica lña escala de los cubos
+    cubo.scale.set(a,b,c)
 
-    return nombre;
+    return cubo;
 }
 
+//Se crea el asiento en el origen y se añade a la escena
 asiento = crearC(0.4, 0.1, 0.4);
-
- //En la escena se añade la funcion del cubo
  scene.add( asiento );
-    
- //asiento.scale.set(0.05, 0.5, 0.05);
-/*pata1 = crearC(0.05, 0.05, 0.5);
-pata2 = crearC(0.05, 0.05, 0.5);
-pata3 = crearC(0.05, 0.05, 0.5);
-pata4 = crearC(0.05, 0.05, 0.5);*/
 
-camera.position.z = 6;
-//camera.position.x = 2;
-camera.position.y = 1;
-//pata1.position.set(1,1,1)
+//Se crean las patas de la silla, se añaden a la escena y se posicionan en los extremos del asiento
+ pata1 = crearC(0.05, 0.5, 0.05);
+ scene.add( pata1 );
+ pata1.position.set(-0.35, -0.5, 0.35);
 
+pata2 = crearC(0.05, 0.5, 0.05);
+ scene.add( pata2 );
+ pata2.position.set(0.35, -0.5, 0.35);
+
+pata3 = crearC(0.05, 0.5, 0.05);
+ scene.add( pata3 );
+ pata3.position.set(-0.35, -0.5, -0.35);
+
+pata4 = crearC(0.05, 0.5, 0.05);
+ scene.add( pata4 );
+ pata4.position.set(0.35, -0.5, -0.35);
+
+//Se posiciona la camara
+camera.position.set(1.5, 1, 4);
+camera.rotation.set(0, 0.3, 0);
+
+// Se hace el render
 renderer.render( scene, camera );
             
