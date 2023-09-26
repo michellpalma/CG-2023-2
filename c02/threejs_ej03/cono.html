@@ -72,25 +72,70 @@
             }
 
             // Material y malla del cono con textura personalizada
-            var material = new THREE.MeshBasicMaterial({ map: null });
-
+            //var material = new THREE.MeshBasicMaterial({ map: null });
+            const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
             // Material y malla del cono
             var cono = new THREE.Mesh(geometry, material);
             scene.add(cono);
 	
 
-            //Posición de la cámara en el eje z
-			camera.position.z = 6;
-            camera.rotation.y = 6
 
 
-            // Animación de la escena
+
+            let isDragging = false;
+            let previousMousePosition = {x: 0, y: 0 };
+
+            document.addEventListener('mousedown', onMouseDown);
+            document.addEventListener('mouseup', onMouseUp);
+            document.addEventListener('mousemove', onMouseMove);
+
+            function onMouseDown(event) 
+            {
+                isDragging = true;
+                previousMousePosition = { x: event.clientX, y: event.clientY };
+            }
+
+            function onMouseUp() 
+            {
+                isDragging = false;
+            }
+
+            function onMouseMove(event)
+            {
+                if (!isDragging) return;
+
+                const deltaMove = {x: event.clientX - previousMousePosition.x,
+                    y: event.clientY - previousMousePosition.y};
+
+                const deltaRotationQuaternion = new THREE.Quaternion()
+                .setFromEuler(new THREE.Euler(toRadians(deltaMove.y * 1),
+                toRadians(deltaMove.x * 1), 0,'XYZ'));
+
+                cono.quaternion.multiplyQuaternions(deltaRotationQuaternion, cono.quaternion);
+                previousMousePosition = {x: event.clientX,y: event.clientY };
+            }
+
+            function toRadians(angle) 
+            {
+                return angle * (Math.PI / 180);
+            }
+
+            // Movemos la cámara hacia atrás para poder ver el cono
+            camera.position.z = 5;
+
+            // Función de renderizado
             function animate() 
             {
                 requestAnimationFrame(animate);
+
+                // Renderizamos la escena
                 renderer.render(scene, camera);
             }
             animate();
+
+
+
+            
             
 			
         </script>
