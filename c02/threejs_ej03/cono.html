@@ -10,7 +10,9 @@
     </head>
     <body>
 		<!-- Incorporar la libreria de three.min.js-->
-        <script src="three.min.js"></script>
+        <script src="https://threejsfundamentals.org/threejs/resources/threejs/r122/build/three.js">
+        </script>
+        
         <script>
             
             const scene = new THREE.Scene(); //Se crea una nueva escena
@@ -30,17 +32,23 @@
 
             for (var i = 0; i <= segments; i++) 
             {
+                
                 var theta = (i / segments) * Math.PI * 2;
                 var x = Math.cos(theta) * baseRadius;
                 var y = Math.sin(theta) * baseRadius;
                 var vertex = new THREE.Vector3(x, y, 0);
                 geometry.vertices.push(vertex);
+            
             }
-
+            geometry.vertices.push(
+ 				new THREE.Vector3(-1, -1, -1),
+ 				new THREE.Vector3( 1, -1, -1),
+            )
             // Punto de la punta del cono
             var apex = new THREE.Vector3(0, 0, 1);
             geometry.vertices.push(apex);
-
+            
+            
             // Caras del cono
             for (var i = 0; i < segments; i++) 
             {
@@ -48,28 +56,30 @@
                 geometry.faces.push(face);
             }
             geometry.computeFaceNormals();
+            
             // Cargar textura personalizada
-            var textureLoader = new THREE.TextureLoader();
+            /*var textureLoader = new THREE.TextureLoader();
             var texture = textureLoader.load('galleta.jpg');
 
             // Material y malla del cono con textura personalizada
             var material = new THREE.MeshBasicMaterial({ map: texture });
 
-            // Material y malla del cono
+            // Material y malla del cono*/
+            const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
             var cono = new THREE.Mesh(geometry, material);
             scene.add(cono);
 	
 
             //Posición de la cámara en el eje z
-			camera.position.z = 5;
+			camera.position.z = 6;
 
-            var controls = new THREE.OrbitControls(camera, renderer.domElement);
+            //var controls = new THREE.OrbitControls(camera, renderer.domElement);
 
             // Animación de la escena
             function animate() 
             {
                 requestAnimationFrame(animate);
-                controls.update();
+                //controls.update();
                 renderer.render(scene, camera);
             }
             animate();
