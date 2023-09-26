@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>MDN Games: Three.js demo</title>
+	<style>
+		body { margin: 0; padding: 0; font-size: 0; }
+		canvas { width: 100%; height: 100%; }
+	</style>
+    </head>
+    <body>
+		<!-- Incorporar la libreria de three.min.js-->
+        <script src="three.min.js"></script>
+        <script>
+            
+            const scene = new THREE.Scene(); //Se crea una nueva escena
+            
+            //Se crea un nueva camara
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer();//Se crea un nuevo render
+			renderer.setSize( window.innerWidth, window.innerHeight );//Se crea el tamaño del render
+            document.body.appendChild( renderer.domElement );//renderer.domElement
+            
+			// Crear geometría del cono
+            const geometry = new THREE.Geometry();
+
+            // Puntos de la base del cono
+            var baseRadius = 1;
+            var segments = 20;
+
+            for (var i = 0; i <= segments; i++) 
+            {
+                var theta = (i / segments) * Math.PI * 2;
+                var x = Math.cos(theta) * baseRadius;
+                var y = Math.sin(theta) * baseRadius;
+                var vertex = new THREE.Vector3(x, y, 0);
+                geometry.vertices.push(vertex);
+            }
+
+            // Punto de la punta del cono
+            var apex = new THREE.Vector3(0, 0, 1);
+            geometry.vertices.push(apex);
+
+            // Caras del cono
+            for (var i = 0; i < segments; i++) 
+            {
+                var face = new THREE.Face3(i, (i + 1) % segments, segments);
+                geometry.faces.push(face);
+            }
+            geometry.computeFaceNormals();
+            // Cargar textura personalizada
+            var textureLoader = new THREE.TextureLoader();
+            var texture = textureLoader.load('galleta.jpg');
+
+            // Material y malla del cono con textura personalizada
+            var material = new THREE.MeshBasicMaterial({ map: texture });
+
+            // Material y malla del cono
+            var cono = new THREE.Mesh(geometry, material);
+            scene.add(cono);
+	
+
+            //Posición de la cámara en el eje z
+			camera.position.z = 5;
+
+            var controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+            // Animación de la escena
+            function animate() 
+            {
+                requestAnimationFrame(animate);
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            animate();
+            
+			
+        </script>
+    </body>
+</html>
