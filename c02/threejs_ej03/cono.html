@@ -10,7 +10,7 @@
     </head>
     <body>
 		<!-- Incorporar la libreria de three.min.js-->
-        <script src="https://threejsfundamentals.org/threejs/resources/threejs/r122/build/three.js">
+        <script src = "https://threejsfundamentals.org/threejs/resources/threejs/r122/build/three.js">
         </script>
         
         <script>
@@ -57,29 +57,37 @@
             }
             geometry.computeFaceNormals();
             
-            // Cargar textura personalizada
-            /*var textureLoader = new THREE.TextureLoader();
-            var texture = textureLoader.load('galleta.jpg');
+            
+
+
+
+
+            
+             // Función para cargar la textura
+            function cargarTextura(callback) 
+            {
+                var textureLoader = new THREE.TextureLoader();
+                textureLoader.load('galleta.jpg', function(texture) {callback(texture);
+                });
+            }
 
             // Material y malla del cono con textura personalizada
-            var material = new THREE.MeshBasicMaterial({ map: texture });
+            var material = new THREE.MeshBasicMaterial({ map: null });
 
-            // Material y malla del cono*/
-            const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+            // Material y malla del cono
             var cono = new THREE.Mesh(geometry, material);
             scene.add(cono);
 	
 
             //Posición de la cámara en el eje z
 			camera.position.z = 6;
+            camera.rotation.y = 6
 
-            //var controls = new THREE.OrbitControls(camera, renderer.domElement);
 
             // Animación de la escena
             function animate() 
             {
                 requestAnimationFrame(animate);
-                //controls.update();
                 renderer.render(scene, camera);
             }
             animate();
