@@ -1,3 +1,12 @@
 1. ¿Qué pasa si cambia la curva por una línea recta? ¿Cómo se verá el tubo en este caso?
+	En este caso el tubo se vera como una linea, los bordes se veran rectos dependiendo 
+	del radio de los segmentos. 
+
 2. ¿Qué sucede si ajusta el grosor del tubo o cambia el material utilizado para renderizarlo?
+	Al aumentar el grosor de tubo se confunden las curvas y hay que alejar la posicion de la camara.
+
 3. ¿Puede añadir iluminación y sombreado para mejorar la visualización del tubo?
+	Dependiendo del material se prodra notar la diferencia al agregar la iluminacion y el 
+	sombreado, al hacerlo y en caso de que se rote el tubo se podra apreciar la diferencia 
+	entre curvas agregando profundidad.
+	
