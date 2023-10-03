@@ -1,0 +1,3 @@
+1. ¿Qué pasa si cambia la curva por una línea recta? ¿Cómo se verá el tubo en este caso?
+2. ¿Qué sucede si ajusta el grosor del tubo o cambia el material utilizado para renderizarlo?
+3. ¿Puede añadir iluminación y sombreado para mejorar la visualización del tubo?
