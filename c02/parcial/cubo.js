@@ -66,19 +66,20 @@ function creaCubo(a, b)
 
     // Agrega el cubo a la escena
     scene.add(cube);
-
+    
+    return cube;
 }
 
-cube1 = creaCubo(1, 0x00ff9900);
-cube2 = creaCubo(2, 0x00ff00);
-cube3 = creaCubo(4, 0x00ff00);
+const cube1 = creaCubo(1, 0x00ff9900);
+const cube2 = creaCubo(2, 0x00ff00);
+const cube3 = creaCubo(4, 0xEDC0AD);
 
-cube2.position.set(1, 0.5, 0.5);
-
+cube2.position.y = 1.5;
+cube3.position.y = 2.25;
 
 //Se posiciona la camara
-camera.position.set(1.5, 1, 6);
-//camera.rotation.set(0, 0.3, 0);
+camera.position.set(1.5, 1.25, 8);
+scene.position.set(-1, 0, -1);
 
 // Se hace el render
 renderer.render( scene, camera );
