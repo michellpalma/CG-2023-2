@@ -18,8 +18,9 @@
             //Se crea un nueva camara
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             
-            //Posición de la cámara en el eje z
-			camera.position.z = 5;
+            //Posición de la cámara
+			camera.position.z = 8;
+            camera.rotation.x = -0.5; camera.position.y = 2;
             
             //Se crea un nuevo render
             const renderer = new THREE.WebGLRenderer();
@@ -37,30 +38,30 @@
            
             //Sombreado local
 			// Crear el shader de sombreado local
-        const vertexShader = `
-            varying vec3 vNormal;
+            const vertexShader = `
+                varying vec3 vNormal;
 
-            void main() {
-                vNormal = normal;
-                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-            }
-        `;
+                void main() {
+                    vNormal = normal;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `;
 
-        const fragmentShader = `
-            varying vec3 vNormal;
+            const fragmentShader = `
+                varying vec3 vNormal;
 
-            void main() {
-                vec3 lightDirection = normalize(vec3(0.0, 1.0, 1.0));
-                float intensity = dot(vNormal, lightDirection);
+                void main() {
+                    vec3 lightDirection = normalize(vec3(0.0, 1.0, 1.0));
+                    float intensity = dot(vNormal, lightDirection);
 
-                gl_FragColor = vec4(vec3(intensity), 1.0);
-            }
-        `;
+                    gl_FragColor = vec4(vec3(intensity), 1.0);
+                }
+            `;
 
-        const shaderMaterial = new THREE.ShaderMaterial({
-            vertexShader: vertexShader,
-            fragmentShader: fragmentShader
-        });
+            const shaderMaterial = new THREE.ShaderMaterial({
+                vertexShader: vertexShader,
+                fragmentShader: fragmentShader
+            });
 
             
             //const materialLocal = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
