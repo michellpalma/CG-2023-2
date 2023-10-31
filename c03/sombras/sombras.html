@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>MDN Games: Three.js demo</title>
+	<style>
+		body { margin: 0; padding: 0; font-size: 0; }
+		canvas { width: 100%; height: 100%; }
+	</style>
+    </head>
+    <body>
+		<!-- Incorporar la libreria de three.min.js-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script>
+            //Se crea una nueva escena
+            const scene = new THREE.Scene(); 
+            
+            //Se crea un nueva camara
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            
+            //Posición de la cámara en el eje z
+			camera.position.z = 5;
+            
+            //Se crea un nuevo render
+            const renderer = new THREE.WebGLRenderer();
+            
+            //Se crea el tamaño del render
+			renderer.setSize( window.innerWidth, window.innerHeight );
+            
+			//renderer.domElement
+			document.body.appendChild( renderer.domElement );
+            
+
+            const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+           
+           
+           
+            //Sombreado local
+			// Crear el shader de sombreado local
+        const vertexShader = `
+            varying vec3 vNormal;
+
+            void main() {
+                vNormal = normal;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `;
+
+        const fragmentShader = `
+            varying vec3 vNormal;
+
+            void main() {
+                vec3 lightDirection = normalize(vec3(0.0, 1.0, 1.0));
+                float intensity = dot(vNormal, lightDirection);
+
+                gl_FragColor = vec4(vec3(intensity), 1.0);
+            }
+        `;
+
+        const shaderMaterial = new THREE.ShaderMaterial({
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader
+        });
+
+            
+            //const materialLocal = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+            const cubeLocal = new THREE.Mesh( geometry, shaderMaterial );
+            
+            cubeLocal.position.set(-2,0,0);
+            scene.add(cubeLocal);
+        
+            
+            
+            
+            //Sombreado plano
+            const materialPlano = new THREE.MeshLambertMaterial( { color: 0x00ff00 } );
+            const cubePlano = new THREE.Mesh( geometry, materialPlano );
+            
+            cubePlano.position.set(0,0,0);
+            scene.add(cubePlano);
+
+            //Sombreado gouraud
+
+            const materialGou = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
+            const cubeGou = new THREE.Mesh( geometry, materialGou );
+            
+            cubeGou.position.set(2,0,0);
+            scene.add(cubeGou);
+
+            //Sombreado Phong
+            const materialPhong = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
+            const cubePhong = new THREE.Mesh( geometry, materialPhong );
+            
+            cubePhong.position.set(4,0,0);
+            scene.add(cubePhong);
+
+
+
+    		const light = new THREE.PointLight( 0xffffff, 1 ); 
+    		light.position.set(0, 5, 5);
+            scene.add(light);
+
+            renderer.render( scene, camera );
+
+        </script>
+    </body>
+</html>
