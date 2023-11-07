@@ -6,6 +6,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <!--ERROR 2: <script type="text/javascript" src="./animacion1_files/jquery-1.9.0.js.descarga"></script> -->
+    <script src="https://code.jquery.com/jquery-1.9.0.min.js"></script>
 
     <style>
         body{
@@ -38,7 +39,7 @@
         var renderer = new THREE.WebGLRenderer();
 
         //ERROR 4:renderer.setClearColorHex(OxEEEEEE);
-        renderer.setClearColor(new THREE.Color(OxEEEEEE, 1.0));
+        renderer.setClearColor(new THREE.Color(0xEEEEEE, 1.0));
 
         renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -48,7 +49,8 @@
 
         // creamos el plano del suelo
         var planeGeometry = new THREE.PlaneGeometry(60,20);
-        var planeMaterial = new THREE.MeshBasicMaterial({color: excccccc});
+        //var planeMaterial = new THREE.MeshBasicMaterial({color: Oxcccccc});
+        var planeMaterial = new THREE.MeshBasicMaterial({color: 0xcccccc});
         var plane = new THREE.Mesh(planeGeometry,planeMaterial);
 
 
@@ -63,9 +65,10 @@
         scene.add(plane);
 
         // creamos un cubo
-        var cubeGeometry = new THREE.CubeGeometry(4,4,4);
+        //ERROR 7:var cubeGeometry = new THREE.CubeGeometry(4,4,4);
+        var cubeGeometry = new THREE.BoxGeometry(4,4,4);
         
-        // ERROR 7: B del MeshBasicMaterial y {} dentro del parentesis var cubeMaterial = new THREE.MesheasicMaterial((color: 0xff0000, wireframe: true));
+        // ERROR 8: B del MeshBasicMaterial y {} dentro del parentesis var cubeMaterial = new THREE.MesheasicMaterial((color: 0xff0000, wireframe: true));
         var cubeMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});
         var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
@@ -80,7 +83,8 @@
         // creamos una esfera
         var sphereGeometry = new THREE.SphereGeometry(4,20,20);
         var sphereMaterial = new THREE.MeshBasicMaterial({color: 0x7777ff, wireframe: true});
-        var sphere = THREE.Mesh(sphereGeometry,sphereMaterial);
+        // ERROR 9:var sphere = THREE.Mesh(sphereGeometry,sphereMaterial);
+        var sphere = new THREE.Mesh(sphereGeometry,sphereMaterial);
 
         // posicionamos la esfera
         sphere.position.x=20;
